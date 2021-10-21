@@ -11,7 +11,7 @@ export class BeerListComponent implements OnInit {
   beers : Beer[]  = [{
     name: "Yeti",
     price: 250,
-    stock: 0,
+    stock: 1,
     style: "Imperial Stout",
     image: "assets/yeti.png",
     clearance: false,
@@ -19,7 +19,7 @@ export class BeerListComponent implements OnInit {
   {
     name: "Bitter Call Saul",
     price: 400,
-    stock: 10,
+    stock: 0,
     style: "Bitter",
     image: "assets/bitter.png",
     clearance: false,

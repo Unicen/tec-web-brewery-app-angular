@@ -9,13 +9,14 @@
       </tr>
     </thead>
     <tbody>
-
-      <tr *ngFor="let beer of beers" [ngClass]="{'clearance': beer.clearance}">
-          <td *ngIf="beer.stock>0"><img [src]="beer.image" [alt]="beer.name"></td>
-          <td *ngIf="beer.stock>0">{{beer.name}}</td>
-          <td *ngIf="beer.stock>0">{{beer.style}}</td>
-          <td *ngIf="beer.stock>0">{{beer.price | currency:'ARS'}}</td>
-          <td *ngIf="beer.stock>0">{{beer.stock}}</td>
-      </tr>
+      <ng-container *ngFor="let beer of beers">
+        <tr *ngIf="beer.stock>0" [ngClass]="{'clearance': beer.clearance}">
+            <td><img [src]="beer.image" [alt]="beer.name"></td>
+            <td>{{beer.name}}</td>
+            <td>{{beer.style}}</td>
+            <td>{{beer.price | currency:'ARS'}}</td>
+            <td>{{beer.stock}}</td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
