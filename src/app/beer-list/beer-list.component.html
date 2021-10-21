@@ -9,26 +9,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><img [src]="beer.image" [alt]="beer.name"></td>
-        <td>{{beer.name}}</td>
-        <td>{{beer.style}}</td>
-        <td>{{beer.price}}</td>
-        <td>{{beer.stock}}</td>
-      </tr>
-      <tr>
-        <td>No Image</td>
-        <td>La Rubia</td>
-        <td>Golden Ale</td>
-        <td>$150</td>
-        <td>200</td>
-      </tr>
-      <tr>
-        <td>No Image</td>
-        <td>Red Red Wine</td>
-        <td>Barlywine</td>
-        <td>$250</td>
-        <td>10</td>
+
+      <tr *ngFor="let beer of beers" [ngClass]="{'clearance': beer.clearance}">
+          <td *ngIf="beer.stock>0"><img [src]="beer.image" [alt]="beer.name"></td>
+          <td *ngIf="beer.stock>0">{{beer.name}}</td>
+          <td *ngIf="beer.stock>0">{{beer.style}}</td>
+          <td *ngIf="beer.stock>0">{{beer.price | currency:'ARS'}}</td>
+          <td *ngIf="beer.stock>0">{{beer.stock}}</td>
       </tr>
     </tbody>
   </table>
