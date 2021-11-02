@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BeerDataService } from '../beer-data.service';
 import { Beer } from './beer';
 
 @Component({
@@ -8,36 +9,39 @@ import { Beer } from './beer';
 })
 export class BeerListComponent implements OnInit {
 
-  beers : Beer[]  = [{
-    name: "Yeti",
-    price: 250,
-    stock: 1,
-    style: "Imperial Stout",
-    image: "assets/yeti.png",
-    clearance: false,
-    quantity: 0,
-  },
-  {
-    name: "Bitter Call Saul",
-    price: 400,
-    stock: 0,
-    style: "Bitter",
-    image: "assets/bitter.png",
-    clearance: false,
-    quantity: 0,
-  },
-  {
-    name: "Scotch",
-    price: 150,
-    stock: 220,
-    style: "Scotch",
-    image: "assets/scotch.png",
-    clearance: true,
-    quantity: 0,
-  }]
-  constructor() { }
+  beers : Beer[]  = [];
+  
+  // [{
+  //   name: "Yeti",
+  //   price: 250,
+  //   stock: 1,
+  //   style: "Imperial Stout",
+  //   image: "assets/yeti.png",
+  //   clearance: false,
+  //   quantity: 0,
+  // },
+  // {
+  //   name: "Bitter Call Saul",
+  //   price: 400,
+  //   stock: 0,
+  //   style: "Bitter",
+  //   image: "assets/bitter.png",
+  //   clearance: false,
+  //   quantity: 0,
+  // },
+  // {
+  //   name: "Scotch",
+  //   price: 150,
+  //   stock: 220,
+  //   style: "Scotch",
+  //   image: "assets/scotch.png",
+  //   clearance: true,
+  //   quantity: 0,
+  // }]
+  constructor(private beersDataService: BeerDataService) { }
 
   ngOnInit(): void {
+    this.beersDataService.getAll().subscribe( beers => this.beers = beers);
   }
 
   upQuantity(beer : Beer): void{
