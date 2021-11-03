@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BeerCartService } from '../beer-cart.service';
 import { Beer } from '../beer-list/beer';
 
 @Component({
@@ -8,41 +9,20 @@ import { Beer } from '../beer-list/beer';
 })
 export class CartComponent implements OnInit {
 
-  total : number = 0;
-  beers : Beer[]  =
-  [{
-    name: "Yeti",
-    price: 250,
-    stock: 1,
-    style: "Imperial Stout",
-    image: "assets/yeti.png",
-    clearance: false,
-    quantity: 2,
-  },
-  {
-    name: "Bitter Call Saul",
-    price: 400,
-    stock: 0,
-    style: "Bitter",
-    image: "assets/bitter.png",
-    clearance: false,
-    quantity: 3,
-  },
-  {
-    name: "Scotch",
-    price: 150,
-    stock: 220,
-    style: "Scotch",
-    image: "assets/scotch.png",
-    clearance: true,
-    quantity: 0,
-  }]
-  constructor() { }
+  beers : Beer[] = [];
+  constructor(private beersCartService: BeerCartService) { }
 
   ngOnInit(): void {
+    this.beersCartService.beers
+    .subscribe(data => this.beers = data);
+  }
+
+  total(){
+    let sum=0;
     this.beers.forEach(beer => {
-      this.total += beer.quantity * beer.price
+      sum += beer.quantity * beer.price
     });
+    return sum;
   }
 
 }

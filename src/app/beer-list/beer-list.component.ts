@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BeerCartService } from '../beer-cart.service';
 import { BeerDataService } from '../beer-data.service';
 import { Beer } from './beer';
 
@@ -11,34 +12,7 @@ export class BeerListComponent implements OnInit {
 
   beers : Beer[]  = [];
   
-  // [{
-  //   name: "Yeti",
-  //   price: 250,
-  //   stock: 1,
-  //   style: "Imperial Stout",
-  //   image: "assets/yeti.png",
-  //   clearance: false,
-  //   quantity: 0,
-  // },
-  // {
-  //   name: "Bitter Call Saul",
-  //   price: 400,
-  //   stock: 0,
-  //   style: "Bitter",
-  //   image: "assets/bitter.png",
-  //   clearance: false,
-  //   quantity: 0,
-  // },
-  // {
-  //   name: "Scotch",
-  //   price: 150,
-  //   stock: 220,
-  //   style: "Scotch",
-  //   image: "assets/scotch.png",
-  //   clearance: true,
-  //   quantity: 0,
-  // }]
-  constructor(private beersDataService: BeerDataService) { }
+  constructor(private beersDataService: BeerDataService, private beersCartService: BeerCartService) { }
 
   ngOnInit(): void {
     this.beersDataService.getAll().subscribe( beers => this.beers = beers);
@@ -47,12 +21,14 @@ export class BeerListComponent implements OnInit {
   upQuantity(beer : Beer): void{
     if(beer.stock > beer.quantity) {
       beer.quantity ++;
+      this.beersCartService.addToCart(beer);
     }
   }
 
   downQuantity(beer : Beer): void{
     if(beer.quantity > 0) {
       beer.quantity --;
+      this.beersCartService.addToCart(beer);
     }
   }
 
