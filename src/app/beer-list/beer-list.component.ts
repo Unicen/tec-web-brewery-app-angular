@@ -15,7 +15,7 @@ export class BeerListComponent implements OnInit {
   constructor(private beersDataService: BeerDataService, private beersCartService: BeerCartService) { }
 
   ngOnInit(): void {
-    this.beersDataService.getAll().subscribe( beers => this.beers = beers);
+    this.beersDataService.beers.subscribe( beers => this.beers = beers);
   }
 
   upQuantity(beer : Beer): void{

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Beer } from './beer-list/beer';
 
 const URL = "http://localhost:3000/beers";
@@ -10,10 +10,25 @@ const URL = "http://localhost:3000/beers";
 })
 export class BeerDataService {
 
-  constructor(private http: HttpClient) { }
+  private _beers : Beer[] = [];
+  private _beersSubjects : BehaviorSubject<Beer[]> = new BehaviorSubject(this._beers);
+  public beers : Observable<Beer[]> = this._beersSubjects.asObservable();
   
-  getAll(): Observable<Beer[]> {
-    return this.http.get<Beer[]>(URL);
+  constructor(private http: HttpClient) { 
+    this.http.get<Beer[]>(URL).subscribe(data => {
+      this._beers.push(...data);
+    });
+  }
+
+  create(beer: Beer): void{
+    this.http.post<Beer>(URL, beer).subscribe({
+      error: error => {
+        console.error('There was an error!', error);
+    },
+      next: data => {
+        this._beers.push(data)
+      }
+    });
   }
 
 }
